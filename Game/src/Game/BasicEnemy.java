@@ -3,9 +3,7 @@ package Game;
 import java.awt.*;
 
 
-/**
- * Created by Maciej on 2015-05-09.
- */
+
 public class BasicEnemy extends GameObject {
 
     private Handler handler;
