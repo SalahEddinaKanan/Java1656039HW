@@ -1,8 +1,11 @@
 package com.salah.main;
 
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.Random;
+import java.awt.*;
+
 
 public class Game extends Canvas implements Runnable{
 
@@ -12,10 +15,22 @@ public class Game extends Canvas implements Runnable{
 
     private Thread thread;
     private boolean running = false;
-
+    
+    private Random r;
+    private Handler handler;
 
     public Game() {
-        new Window(WIDTH, HEIGHT, " Let's Build a Game/1656039 ",this);
+        handler = new Handler();
+    	
+    	new Window(WIDTH, HEIGHT, " Let's Build a Game/1656039 ",this);
+        
+        r = new Random();
+        
+        
+        handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player));	
+        
+        
+        
     }
 
     public synchronized void start() {
@@ -63,7 +78,7 @@ public class Game extends Canvas implements Runnable{
         stop();
     }
     private void tick() {
-
+    	handler.tick();
     }
     private void render() {
         BufferStrategy bs = this.getBufferStrategy();
@@ -73,9 +88,11 @@ public class Game extends Canvas implements Runnable{
         }
         Graphics g = bs.getDrawGraphics();
 
-        g.setColor(Color.green);
+        g.setColor(Color.black);
         g.fillRect(0,0,WIDTH,HEIGHT);
-
+        
+        handler.render(g);
+        
         g.dispose();
         bs.show();
     }
